@@ -9,7 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "14.1.1",
+    "cosine-similarity": "^1.0.1",
+    "next": "^14.2.18",
     "openai": "^4.72.0",
     "react": "^18",
     "react-dom": "^18",

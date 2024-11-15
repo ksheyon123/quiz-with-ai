@@ -10,11 +10,13 @@ import { CornerDownLeft } from "@/components/CornerDownLeft";
 import { API_PATH } from "@/constants";
 import { CanvasDrawing } from "@/components/CanvasDrawing";
 import { DownloadImg } from "@/components/Download";
+import { Loading } from "@/components/Loading";
 
 const QuizGame = () => {
   const [value, setValue] = useState<string>();
-  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [question, setQuestion] = useState<string>("");
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [isSubmit, setIsSubmit] = useState<boolean>(false);
 
   const post = async (params: any) => {
     console.log("params", params);
@@ -28,24 +30,34 @@ const QuizGame = () => {
   };
 
   const submit = async () => {
-    const result = await post({ data: value });
-    setValue("");
+    try {
+      if (isSubmit) return;
+      setIsSubmit(true);
+      const result = await post({ data: value });
+      setValue("");
+    } catch (e) {
+      throw e;
+    } finally {
+      setIsSubmit(false);
+    }
   };
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const v = e.target.value;
     setValue(v);
   };
 
+  const getQuestion = async () => {
+    const result = await fetch(`${API_PATH.AI}`, {
+      method: "GET",
+    });
+    const data = await result.json();
+    setQuestion((prev) => prev + data.data);
+  };
   useEffect(() => {
-    const getQuestion = async () => {
-      const result = await fetch(`${API_PATH.AI}`, {
-        method: "GET",
-      });
-      const data = await result.json();
-      setQuestion((prev) => prev + data.data);
-    };
-    getQuestion();
-  }, []);
+    if (!question) {
+      getQuestion();
+    }
+  }, [question]);
 
   useEffect(() => {
     // Event handler
@@ -106,8 +118,13 @@ const QuizGame = () => {
                         className="text-gray-500 hover:text-blue-600 transition-colors duration-200 p-1"
                         aria-label="Send answer"
                         onClick={() => submit()}
+                        disabled={isSubmit}
                       >
-                        <CornerDownLeft className="w-5 h-5" />
+                        {isSubmit ? (
+                          <Loading />
+                        ) : (
+                          <CornerDownLeft className="w-5 h-5" />
+                        )}
                       </button>
                       <button
                         onClick={() => setIsVisible((prev) => !prev)}

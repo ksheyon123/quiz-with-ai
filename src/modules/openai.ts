@@ -19,32 +19,31 @@ const csAlgorithmList = [
   "Data Structures",
   "Optimization",
   "Game Theory",
-  "Recursion",
-  "Tree",
-  "Linked List",
-  "Stack",
-  "Queue",
 ];
 
-export const requestSample = async () => {
+const basicMsgs = [
+  {
+    role: "system",
+    content: "당신은 알고리즘 문제를 내는 퀴즈 봇입니다.",
+  },
+  {
+    role: "system",
+    content: "당신은 상대방에게 알고리즘과 관련된 문제를 출제합니다.",
+  },
+  {
+    role: "system",
+    content: `다음은 알고리즘 유형입니다. ${csAlgorithmList.join(
+      ","
+    )}. 목록에서 한가지 알고리즘 유형을 선택하세요.`,
+  },
+  { role: "user", content: "첫 번째 퀴즈 문제를 주세요." },
+];
+
+export const requestQuestion = async (msgs: any[] = basicMsgs) => {
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: [
-        { role: "system", content: "You are a quiz bot." },
-        {
-          role: "system",
-          content: `You are a quiz bot. You are going to give a Computer Sceience Quiz. And here is the sort of type of Computer Sceience ${csAlgorithmList.join(
-            ","
-          )}`,
-        },
-        {
-          role: "system",
-          content:
-            "Pick the one of the type of Computer Sceience and give a easiet question.",
-        },
-        { role: "user", content: "첫 번째 퀴즈 질문을 주세요." },
-      ],
+      messages: msgs,
     });
     return completion;
   } catch (error: any) {
@@ -57,11 +56,11 @@ export const requestSample = async () => {
   }
 };
 
-export const requestAnswer = async (answer: string) => {
+export const requestAnswer = async (answer: any[]) => {
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: `정답은 ${answer}입니다.` }],
+      messages: answer,
     });
     return completion;
   } catch (error: any) {
@@ -72,4 +71,11 @@ export const requestAnswer = async (answer: string) => {
       console.error("An unexpected error occurred:", error);
     }
   }
+};
+
+export const requestEmbedding = async (text: string) => {
+  const completion = await openai.embeddings.create({
+    model: "text-embedding-3-small",
+    input: text,
+  });
 };
