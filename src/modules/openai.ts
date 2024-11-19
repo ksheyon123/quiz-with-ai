@@ -1,6 +1,9 @@
 import OpenAI from "openai";
+console.log("PROJECT ID : ",process.env.AI_PROJECT_ID);
 const openai = new OpenAI({
   apiKey: `${process.env.AI_API_KEY}`,
+  project: `${process.env.AI_PROJECT_ID}`,
+  organization: `${process.env.AI_ORGANIZATION_ID}`,
 });
 
 const csAlgorithmList = [
@@ -46,7 +49,7 @@ const basicMsgs = [
 export const requestQuestion = async (msgs: any[] = basicMsgs) => {
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-3.5-turbo-1106",
       messages: msgs,
     });
     return completion;
@@ -63,7 +66,7 @@ export const requestQuestion = async (msgs: any[] = basicMsgs) => {
 export const requestAnswer = async (answer: any[]) => {
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-3.5-turbo-1106",
       messages: answer,
     });
     return completion;
@@ -77,11 +80,11 @@ export const requestAnswer = async (answer: any[]) => {
   }
 };
 
-export const requestEmbedding = async (text: string) => {
+export const requestEmbedding = async (input: string, model: string = "text-embedding-ada-002") => {
   try {
     const completion = await openai.embeddings.create({
-      model: "text-embedding-ada-002",
-      input: text,
+      model,
+      input,
     });
     return completion;
   } catch (error: any) {
@@ -94,20 +97,24 @@ export const cosineSimilarity = (vector1: number[], vector2: number[]) => {
     throw new Error("Vectors must be of the same length");
   }
 
-  // Compute the dot product and magnitudes of the vectors
-  const dotProduct = vector1.reduce((sum, val, i) => sum + val * vector2[i], 0);
-  const magnitude1 = Math.sqrt(
-    vector1.reduce((sum, val) => sum + val * val, 0)
-  );
-  const magnitude2 = Math.sqrt(
-    vector2.reduce((sum, val) => sum + val * val, 0)
-  );
+  let dotProduct = 0;
+  let magnitude1Squared = 0;
+  let magnitude2Squared = 0;
 
-  // Avoid division by zero
-  if (magnitude1 === 0 || magnitude2 === 0) {
+  for (let i = 0; i < vector1.length; i++) {
+    dotProduct += vector1[i] * vector2[i];
+    magnitude1Squared += vector1[i] ** 2;
+    magnitude2Squared += vector2[i] ** 2;
+  }
+
+  if (magnitude1Squared === 0 || magnitude2Squared === 0) {
     throw new Error("One of the vectors has zero magnitude");
   }
 
-  // Compute cosine similarity
-  return dotProduct / (magnitude1 * magnitude2);
+  return dotProduct / (Math.sqrt(magnitude1Squared) * Math.sqrt(magnitude2Squared));
+};
+
+export const listFineTuneModels = async () => {
+  const models = await openai.fineTuning.jobs.list();
+  return models;
 };
