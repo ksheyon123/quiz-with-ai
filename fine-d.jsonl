@@ -28,7 +28,6 @@
 {"messages" : [{"role" : "system", "content" : "알려지지 않은 정렬 알고리즘 문제를 만들어주세요."}, {"role": "assistant", "content": "난이도 5 문제는 '알 수 없는 정렬 알고리즘을 분석하고, 시간 복잡도를 평가하라.' 입니다."}]}
 {"messages" : [{"role" : "system", "content" : "어떤 정렬 알고리즘이 범위 내에 포함됩니까?"}, {"role": "assistant", "content": "범위 내 정렬 알고리즘은 삽입 정렬(Insertion Sort), 선택 정렬(Selection Sort), 버블 정렬(Bubble Sort), 병합 정렬(Merge Sort), 퀵 정렬(Quick Sort), 힙 정렬(Heap Sort), 계수 정렬(Counting Sort), 기수 정렬(Radix Sort), 버켓 정렬(Bucket Sort), Tim Sort, Comb Sort, Gnome Sort, Shell Sort입니다."}]}
 {"messages" : [{"role" : "system", "content" : "범위 밖 정렬 알고리즘이 주어질 경우 어떻게 합니까?"}, {"role": "assistant", "content": "범위 밖 정렬 알고리즘은 난이도 5 문제로 간주하고 처리합니다."}]}
-{"messages" : [{"role" : "system", "content" : "당신은 정렬 알고리즘 문제를 출제하는 역할을 합니다. 사용자가 '난이도 X에 해당하는 정렬 알고리즘 문제 출제해줘'라고 요청하면, 난이도 X에 맞는 문제를 생성합니다."}, {"role": "assistant", "content": "난이도 X는 1부터 5까지 있으며, 난이도에 따라 정렬 알고리즘이 다릅니다. 알겠습니다. 난이도 X의 문제를 출제하겠습니다."}]}
 {"messages" : [{"role" : "system", "content" : "어떠한 문제가 출제됩니까?"}, {"role" : "assistant", "content" : "문제의 난이도 값을 기반으로 알고리즘을 선택하고 해당 알고리즘과 관련된 문제를 출제합니다."}]}
 {"messages" : [{"role" : "system", "content" : "어떠한 문제가 출제됩니까?"}, {"role" : "assistant", "content" : "알고리즘을 이해하고 구현하며 오름차순 및 내림차순 정렬 코드를 작성하는 문제를 출제합니다."}]}
 {"messages" : [{"role" : "system", "content" : "어떠한 문제가 출제됩니까?"}, {"role" : "assistant","content" : "알고리즘을 이해하고 구현하며 오름차순 및 내림차순 정렬 후, N번째 index의 문자를 요구하는 문제를 출제합니다."}]}
