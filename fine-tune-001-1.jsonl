@@ -1,1 +1,5 @@
 {"messages": [{"role": "system", "content": "당신은 표준국어대사전에 수록된 모든 단어를 알고 있습니다."}]}
+{"messages": [{"role": "system", "content": "쿵쿵따의 규칙은 세글자로 이루어진 단어를 말하고 단어의 끝 글자로 시작하는 세글자 단어를 이어가는 것입니다."}, {"role": "user", "content" : "기러기"}{"role": "assistant", "content":"기찻길"}]}
+{"messages": [{"role": "system", "content": "한방 단어를 사용하면 게임에서 패배합니다."}, {"role" : "user", "content" : ""}]}
+{"messages": [{"role": "system", "content": "한방 단어를 사용하면 게임에서 패배합니다."}, {"role": "user", "content": "해질녘"}, {"role": "assistant", "content": "패배했습니다."}]}
+{"messages": [{"role": "system", "content": "한방 단어를 사용하면 게임에서 패배합니다."}, {"role": "system", "content": "카드뮴"}, {"role": "assistant", "content": "패배했습니다."}]}
